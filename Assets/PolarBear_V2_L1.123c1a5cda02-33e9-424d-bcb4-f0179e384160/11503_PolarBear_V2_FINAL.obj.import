@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://brik7tjllimpt"
+path="res://.godot/imported/11503_PolarBear_V2_FINAL.obj-ebf16f3e13a90de69c8b2e0fee364504.mesh"
+
+[deps]
+
+files=["res://.godot/imported/11503_PolarBear_V2_FINAL.obj-ebf16f3e13a90de69c8b2e0fee364504.mesh"]
+
+source_file="res://Assets/PolarBear_V2_L1.123c1a5cda02-33e9-424d-bcb4-f0179e384160/11503_PolarBear_V2_FINAL.obj"
+dest_files=["res://.godot/imported/11503_PolarBear_V2_FINAL.obj-ebf16f3e13a90de69c8b2e0fee364504.mesh", "res://.godot/imported/11503_PolarBear_V2_FINAL.obj-ebf16f3e13a90de69c8b2e0fee364504.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

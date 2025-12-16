@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://w8shvcg66yug"]
+
+[ext_resource type="Script" uid="uid://7q178ha0rmqp" path="res://ore.gd" id="1_52qyt"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wc3wj"]
+albedo_color = Color(1, 1, 0.192157, 1)
+emission_enabled = true
+emission_energy_multiplier = 5.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_52qyt"]
+shading_mode = 0
+albedo_color = Color(1, 1, 0.294118, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_r2ayp"]
+material = SubResource("StandardMaterial3D_52qyt")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_bif65"]
+
+[node name="Ore" type="Area3D" groups=["ore"]]
+script = ExtResource("1_52qyt")
+
+[node name="OreMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_wc3wj")
+mesh = SubResource("SphereMesh_r2ayp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+shape = SubResource("SphereShape3D_bif65")

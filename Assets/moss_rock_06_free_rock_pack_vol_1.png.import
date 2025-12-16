@@ -1,0 +1,39 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://3ugd4cummb5x"
+path.s3tc="res://.godot/imported/moss_rock_06_free_rock_pack_vol_1.png-2094f8f84a06f643111a3526e00726af.s3tc.ctex"
+path.etc2="res://.godot/imported/moss_rock_06_free_rock_pack_vol_1.png-2094f8f84a06f643111a3526e00726af.etc2.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "28d2186e0b5df289ab3a9aad2a8ce2d4"
+}
+
+[deps]
+
+source_file="res://Assets/moss_rock_06_free_rock_pack_vol_1.png"
+dest_files=["res://.godot/imported/moss_rock_06_free_rock_pack_vol_1.png-2094f8f84a06f643111a3526e00726af.s3tc.ctex", "res://.godot/imported/moss_rock_06_free_rock_pack_vol_1.png-2094f8f84a06f643111a3526e00726af.etc2.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0

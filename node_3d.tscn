@@ -1,0 +1,691 @@
+[gd_scene load_steps=48 format=3 uid="uid://hit6ddguobp4"]
+
+[ext_resource type="Script" uid="uid://ci4kln15ugy4u" path="res://starter.gd" id="1_4arys"]
+[ext_resource type="Script" uid="uid://ojals4h4iyqn" path="res://addons/zylann.hterrain/hterrain.gd" id="1_a0tk4"]
+[ext_resource type="Resource" uid="uid://dy5mfv81i3ypi" path="res://Data/data.hterrain" id="2_r3fl7"]
+[ext_resource type="Script" uid="uid://dwbnr7hog81rd" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="3_jka67"]
+[ext_resource type="Shader" uid="uid://bbwll6pmkmdb7" path="res://addons/zylann.hterrain/shaders/lookdev.gdshader" id="3_jsk3o"]
+[ext_resource type="Texture2D" uid="uid://ckgsmpqwwh4l5" path="res://Data/forest_t/node_3d_slot0_albedo_bump.png" id="4_wc5p8"]
+[ext_resource type="Texture2D" uid="uid://dqancugixfg31" path="res://Data/forest_t/node_3d_slot1_albedo_bump.png" id="5_jsk3o"]
+[ext_resource type="Texture2D" uid="uid://bvwxvinsh3w36" path="res://Data/forest_t/node_3d_slot0_normal_roughness.png" id="6_4arys"]
+[ext_resource type="Texture2D" uid="uid://d4dji08dywr5d" path="res://Data/forest_t/node_3d_slot1_normal_roughness.png" id="7_6iypd"]
+[ext_resource type="ArrayMesh" uid="uid://bsq1murba5wg1" path="res://Assets/Trees/uploads_files_1970932_conifer_macedonian_pine.obj" id="10_6iypd"]
+[ext_resource type="ArrayMesh" uid="uid://ssfra5yvgqu7" path="res://Assets/Trees/uploads_files_885287_Simple+Tree.obj" id="11_tereu"]
+[ext_resource type="Script" uid="uid://m5pehm1dv3j" path="res://player.gd" id="12_cdqbm"]
+[ext_resource type="Script" uid="uid://br12tl3f32k7j" path="res://hand_interactor.gd" id="13_jsnrv"]
+[ext_resource type="ArrayMesh" uid="uid://brik7tjllimpt" path="res://Assets/PolarBear_V2_L1.123c1a5cda02-33e9-424d-bcb4-f0179e384160/11503_PolarBear_V2_FINAL.obj" id="13_tuemg"]
+[ext_resource type="ArrayMesh" uid="uid://c66fdenh6aehu" path="res://Assets/lowpolydeer/deer.obj" id="14_i0g27"]
+[ext_resource type="ArrayMesh" uid="uid://b43b5snwuhlnu" path="res://Assets/Giraffe/Giraffe.OBJ" id="15_ealrb"]
+[ext_resource type="ArrayMesh" uid="uid://codsanw7p6v4k" path="res://Assets/Elephant_v2_L1.123c12499572-8ec8-495e-8658-c2136c4c966f/11499_Elephant_v2.obj" id="16_jsnrv"]
+[ext_resource type="PackedScene" uid="uid://bb6bvvxx8ofh1" path="res://Assets/moss_rock_06_free_rock_pack_vol.1.glb" id="17_lggff"]
+[ext_resource type="PackedScene" uid="uid://du1u8h4p3dw4f" path="res://TeleportPad.tscn" id="18_i0g27"]
+[ext_resource type="PackedScene" uid="uid://w8shvcg66yug" path="res://ore.tscn" id="20_lggff"]
+
+[sub_resource type="Resource" id="Resource_i5arm"]
+script = ExtResource("3_jka67")
+mode = 0
+textures = [[ExtResource("4_wc5p8"), ExtResource("5_jsk3o")], [ExtResource("6_4arys"), ExtResource("7_6iypd")]]
+
+[sub_resource type="BoxMesh" id="BoxMesh_4arys"]
+size = Vector3(600, 1, 600)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6iypd"]
+albedo_color = Color(0.341176, 0.262745, 0.223529, 1)
+
+[sub_resource type="Sky" id="Sky_4arys"]
+
+[sub_resource type="Environment" id="Environment_6iypd"]
+background_mode = 2
+sky = SubResource("Sky_4arys")
+
+[sub_resource type="Shader" id="Shader_tereu"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.4.1.stable's StandardMaterial3D.
+
+shader_type spatial;
+render_mode blend_mix, depth_draw_always, cull_back, diffuse_burley, specular_schlick_ggx;
+
+uniform vec4 albedo : source_color;
+uniform sampler2D texture_albedo : source_color, filter_linear_mipmap, repeat_enable;
+uniform ivec2 albedo_texture_size;
+uniform float point_size : hint_range(0.1, 128.0, 0.1);
+
+uniform float roughness : hint_range(0.0, 1.0);
+uniform sampler2D texture_metallic : hint_default_white, filter_linear_mipmap, repeat_enable;
+uniform vec4 metallic_texture_channel;
+uniform sampler2D texture_roughness : hint_roughness_r, filter_linear_mipmap, repeat_enable;
+
+uniform float specular : hint_range(0.0, 1.0, 0.01);
+uniform float metallic : hint_range(0.0, 1.0, 0.01);
+
+uniform sampler2D texture_refraction : filter_linear_mipmap, repeat_enable;
+uniform float refraction : hint_range(-1.0, 1.0, 0.001);
+uniform vec4 refraction_texture_channel;
+uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_linear_mipmap;
+uniform sampler2D depth_texture : hint_depth_texture, repeat_disable, filter_nearest;
+
+uniform sampler2D texture_normal : hint_roughness_normal, filter_linear_mipmap, repeat_enable;
+uniform float normal_scale : hint_range(-16.0, 16.0);
+varying vec3 uv1_triplanar_pos;
+
+uniform float uv1_blend_sharpness : hint_range(0.0, 150.0, 0.001);
+varying vec3 uv1_power_normal;
+
+uniform vec3 uv1_scale;
+uniform vec3 uv1_offset;
+uniform vec3 uv2_scale;
+uniform vec3 uv2_offset;
+
+void vertex() {
+	vec3 normal = MODEL_NORMAL_MATRIX * NORMAL;
+
+	TANGENT = vec3(0.0, 0.0, -1.0) * abs(normal.x);
+	TANGENT += vec3(1.0, 0.0, 0.0) * abs(normal.y);
+	TANGENT += vec3(1.0, 0.0, 0.0) * abs(normal.z);
+	TANGENT = inverse(MODEL_NORMAL_MATRIX) * normalize(TANGENT);
+
+	BINORMAL = vec3(0.0, 1.0, 0.0) * abs(normal.x);
+	BINORMAL += vec3(0.0, 0.0, -1.0) * abs(normal.y);
+	BINORMAL += vec3(0.0, 1.0, 0.0) * abs(normal.z);
+	BINORMAL = inverse(MODEL_NORMAL_MATRIX) * normalize(BINORMAL);
+
+	// UV1 Triplanar: Enabled (with World Triplanar)
+	uv1_power_normal = pow(abs(normal), vec3(uv1_blend_sharpness));
+	uv1_triplanar_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz * uv1_scale + uv1_offset + TIME *0.10;
+	uv1_power_normal /= dot(uv1_power_normal, vec3(1.0));
+	uv1_triplanar_pos *= vec3(1.0, -1.0, 1.0);
+}
+
+vec4 triplanar_texture(sampler2D p_sampler, vec3 p_weights, vec3 p_triplanar_pos) {
+	vec4 samp = vec4(0.0);
+	samp += texture(p_sampler, p_triplanar_pos.xy) * p_weights.z;
+	samp += texture(p_sampler, p_triplanar_pos.xz) * p_weights.y;
+	samp += texture(p_sampler, p_triplanar_pos.zy * vec2(-1.0, 1.0)) * p_weights.x;
+	return samp;
+}
+
+void fragment() {
+	vec4 albedo_tex = triplanar_texture(texture_albedo, uv1_power_normal, uv1_triplanar_pos);
+	ALBEDO = albedo.rgb * albedo_tex.rgb;
+
+	float metallic_tex = dot(triplanar_texture(texture_metallic, uv1_power_normal, uv1_triplanar_pos), metallic_texture_channel);
+	METALLIC = metallic_tex * metallic;
+	SPECULAR = specular;
+
+	vec4 roughness_texture_channel = vec4(1.0, 0.0, 0.0, 0.0);
+	float roughness_tex = dot(triplanar_texture(texture_roughness, uv1_power_normal, uv1_triplanar_pos), roughness_texture_channel);
+	ROUGHNESS = roughness_tex * roughness;
+
+	// Normal Map: Enabled
+	NORMAL_MAP = triplanar_texture(texture_normal, uv1_power_normal, uv1_triplanar_pos).rgb;
+	NORMAL_MAP_DEPTH = normal_scale;
+
+	// Refraction: Enabled (with normal map texture)
+	vec3 unpacked_normal = NORMAL_MAP;
+	unpacked_normal.xy = unpacked_normal.xy * 2.0 - 1.0;
+	unpacked_normal.z = sqrt(max(0.0, 1.0 - dot(unpacked_normal.xy, unpacked_normal.xy)));
+	vec3 ref_normal = normalize(mix(
+			NORMAL,
+			TANGENT * unpacked_normal.x + BINORMAL * unpacked_normal.y + NORMAL * unpacked_normal.z,
+			NORMAL_MAP_DEPTH));
+	vec2 ref_ofs = SCREEN_UV - ref_normal.xy * dot(triplanar_texture(texture_refraction, uv1_power_normal, uv1_triplanar_pos), refraction_texture_channel) * refraction;
+
+	float ref_amount = 1.0 - albedo.a * albedo_tex.a;
+
+	float refraction_depth_tex = textureLod(depth_texture, ref_ofs, 0.0).r;
+	vec4 refraction_view_pos = INV_PROJECTION_MATRIX * vec4(SCREEN_UV * 2.0 - 1.0, refraction_depth_tex, 1.0);
+	refraction_view_pos.xyz /= refraction_view_pos.w;
+
+	// If the depth buffer is lower then the model's Z position, use the refracted UV, otherwise use the normal screen UV.
+	// At low depth differences, decrease refraction intensity to avoid sudden discontinuities.
+	EMISSION += textureLod(screen_texture, mix(SCREEN_UV, ref_ofs, smoothstep(0.0, 1.0, VERTEX.z - refraction_view_pos.z)), ROUGHNESS * 8.0).rgb * ref_amount * EXPOSURE;
+	ALBEDO *= 1.0 - ref_amount;
+	// Force transparency on the material (required for refraction).
+	ALPHA = 1.0;
+}
+"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_cdqbm"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_imku0"]
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_cdqbm")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wlxy5"]
+render_priority = 0
+shader = SubResource("Shader_tereu")
+shader_parameter/albedo = Color(0, 0.603922, 0.901961, 0.568627)
+shader_parameter/albedo_texture_size = Vector2i(0, 0)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 0.0
+shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/texture_refraction = SubResource("NoiseTexture2D_imku0")
+shader_parameter/refraction = 0.05
+shader_parameter/refraction_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/normal_scale = 1.0
+shader_parameter/uv1_blend_sharpness = 1.0
+shader_parameter/uv1_scale = Vector3(0.04, 0.04, 0.04)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_3v7ru"]
+material = SubResource("ShaderMaterial_wlxy5")
+size = Vector3(170, 50, 50)
+
+[sub_resource type="Skin" id="Skin_tereu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cdqbm"]
+albedo_color = Color(0.208508, 0.406159, 0.0779505, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_imku0"]
+albedo_color = Color(0.607843, 0.14902, 0.329412, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wlxy5"]
+albedo_color = Color(0.115802, 0.303495, 0.230142, 1)
+
+[sub_resource type="Skin" id="Skin_wlxy5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3v7ru"]
+albedo_color = Color(0.345769, 0.725964, 0.274529, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tcnuu"]
+albedo_color = Color(0.210805, 0.386949, 0.0664654, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tereu"]
+albedo_color = Color(0.421065, 0.160709, 0.0202225, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i0g27"]
+albedo_color = Color(0.336057, 0.13972, 0.0325063, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tuemg"]
+albedo_color = Color(0.243137, 0.0352941, 0, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_tuemg"]
+radius = 0.12
+
+[sub_resource type="SphereMesh" id="SphereMesh_i0g27"]
+radius = 0.12
+height = 0.25
+
+[sub_resource type="SphereMesh" id="SphereMesh_ealrb"]
+radius = 0.12
+height = 0.25
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jsnrv"]
+albedo_color = Color(0.333333, 0.12549, 0.12549, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_jsnrv"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_cdqbm"]
+radius = 0.01
+height = 2.525
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_imku0"]
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_4arys")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.861399, 0.507279, 0.0256886, -0.0383756, 0.0145674, 0.999157, 0.506477, -0.861659, 0.0320155, -15.4515, 14.2852, -135.794)
+
+[node name="HTerrain" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -128, 0, -128)
+script = ExtResource("1_a0tk4")
+_terrain_data = ExtResource("2_r3fl7")
+chunk_size = 32
+collision_enabled = true
+collision_layer = 1
+collision_mask = 1
+shader_type = "Classic4"
+custom_shader = ExtResource("3_jsk3o")
+custom_globalmap_shader = null
+texture_set = SubResource("Resource_i5arm")
+render_layers = 1
+cast_shadow = 1
+shader_params/u_ground_uv_scale_per_texture = null
+shader_params/u_depth_blending = true
+shader_params/u_triplanar = null
+shader_params/u_tile_reduction = null
+shader_params/u_globalmap_blend_start = null
+shader_params/u_globalmap_blend_distance = null
+shader_params/u_colormap_opacity_per_texture = null
+metadata/_custom_type_script = "uid://ojals4h4iyqn"
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 130.239, -14.5532, 144.414)
+mesh = SubResource("BoxMesh_4arys")
+surface_material_override/0 = SubResource("StandardMaterial3D_6iypd")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_6iypd")
+
+[node name="MeshInstance3DWater" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 120.905, -26.3878, 269.629)
+mesh = SubResource("BoxMesh_3v7ru")
+
+[node name="Environment" type="Node3D" parent="."]
+
+[node name="RootTree1" type="Node3D" parent="Environment"]
+
+[node name="Tree1-1" type="MeshInstance3D" parent="Environment/RootTree1"]
+transform = Transform3D(0.00486956, 0.00011043, -0.00112922, -0.000175775, 0.00498961, -0.000270047, 0.00112091, 0.0003027, 0.00486333, 138.702, -0.407567, -118.298)
+mesh = ExtResource("10_6iypd")
+skin = SubResource("Skin_tereu")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_cdqbm")
+surface_material_override/1 = SubResource("StandardMaterial3D_imku0")
+surface_material_override/2 = SubResource("StandardMaterial3D_wlxy5")
+
+[node name="Tree1-2" type="MeshInstance3D" parent="Environment/RootTree1"]
+transform = Transform3D(0.00486956, 0.00011043, -0.00112922, -0.000175775, 0.00498961, -0.000270047, 0.00112091, 0.0003027, 0.00486333, 131.321, 0.54147, -81.8859)
+mesh = ExtResource("10_6iypd")
+skin = SubResource("Skin_tereu")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_cdqbm")
+surface_material_override/1 = SubResource("StandardMaterial3D_imku0")
+surface_material_override/2 = SubResource("StandardMaterial3D_wlxy5")
+
+[node name="Tree1-3" type="MeshInstance3D" parent="Environment/RootTree1"]
+transform = Transform3D(0.00486956, 0.00011043, -0.00112922, -0.000175775, 0.00498961, -0.000270047, 0.00112091, 0.0003027, 0.00486333, 139.568, 0.847142, -8.54525)
+mesh = ExtResource("10_6iypd")
+skin = SubResource("Skin_tereu")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_cdqbm")
+surface_material_override/1 = SubResource("StandardMaterial3D_imku0")
+surface_material_override/2 = SubResource("StandardMaterial3D_wlxy5")
+
+[node name="Tree1-4" type="MeshInstance3D" parent="Environment/RootTree1"]
+transform = Transform3D(0.00486956, 0.00011043, -0.00112922, -0.000175775, 0.00498961, -0.000270047, 0.00112091, 0.0003027, 0.00486333, 138.385, 0.0344849, 11.8442)
+mesh = ExtResource("10_6iypd")
+skin = SubResource("Skin_tereu")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_cdqbm")
+surface_material_override/1 = SubResource("StandardMaterial3D_imku0")
+surface_material_override/2 = SubResource("StandardMaterial3D_wlxy5")
+
+[node name="Tree1-5" type="MeshInstance3D" parent="Environment/RootTree1"]
+transform = Transform3D(0.00486956, 0.00011043, -0.00112922, -0.000175775, 0.00498961, -0.000270047, 0.00112091, 0.0003027, 0.00486333, 98.6743, 0.0344849, -5.60079)
+mesh = ExtResource("10_6iypd")
+skin = SubResource("Skin_tereu")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_cdqbm")
+surface_material_override/1 = SubResource("StandardMaterial3D_imku0")
+surface_material_override/2 = SubResource("StandardMaterial3D_wlxy5")
+
+[node name="Tree1-6" type="MeshInstance3D" parent="Environment/RootTree1"]
+transform = Transform3D(0.00486956, 0.00011043, -0.00112922, -0.000175775, 0.00498961, -0.000270047, 0.00112091, 0.0003027, 0.00486333, 99.5316, 0.0344849, 28.5614)
+mesh = ExtResource("10_6iypd")
+skin = SubResource("Skin_tereu")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_cdqbm")
+surface_material_override/1 = SubResource("StandardMaterial3D_imku0")
+surface_material_override/2 = SubResource("StandardMaterial3D_wlxy5")
+
+[node name="Tree1-7" type="MeshInstance3D" parent="Environment/RootTree1"]
+transform = Transform3D(0.00486956, 0.00011043, -0.00112922, -0.000175775, 0.00498961, -0.000270047, 0.00112091, 0.0003027, 0.00486333, 103.613, 0.0344811, 43.9311)
+mesh = ExtResource("10_6iypd")
+skin = SubResource("Skin_tereu")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_cdqbm")
+surface_material_override/1 = SubResource("StandardMaterial3D_imku0")
+surface_material_override/2 = SubResource("StandardMaterial3D_wlxy5")
+
+[node name="Tree1-8" type="MeshInstance3D" parent="Environment/RootTree1"]
+transform = Transform3D(0.00486956, 0.00011043, -0.00112922, -0.000175775, 0.00498961, -0.000270047, 0.00112091, 0.0003027, 0.00486333, 136.349, 0.0344849, 65.5911)
+mesh = ExtResource("10_6iypd")
+skin = SubResource("Skin_tereu")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_cdqbm")
+surface_material_override/1 = SubResource("StandardMaterial3D_imku0")
+surface_material_override/2 = SubResource("StandardMaterial3D_wlxy5")
+
+[node name="Tree1-9" type="MeshInstance3D" parent="Environment/RootTree1"]
+transform = Transform3D(0.00486956, 0.00011043, -0.00112922, -0.000175775, 0.00498961, -0.000270047, 0.00112091, 0.0003027, 0.00486333, 135.015, 0.0344849, 37.4296)
+mesh = ExtResource("10_6iypd")
+skin = SubResource("Skin_tereu")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_cdqbm")
+surface_material_override/1 = SubResource("StandardMaterial3D_imku0")
+surface_material_override/2 = SubResource("StandardMaterial3D_wlxy5")
+
+[node name="Tree1-10" type="MeshInstance3D" parent="Environment/RootTree1"]
+transform = Transform3D(0.00486956, 0.00011043, -0.00112922, -0.000175775, 0.00498961, -0.000270047, 0.00112091, 0.0003027, 0.00486333, 110.331, 0.0344849, 99.0692)
+mesh = ExtResource("10_6iypd")
+skin = SubResource("Skin_tereu")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_cdqbm")
+surface_material_override/1 = SubResource("StandardMaterial3D_imku0")
+surface_material_override/2 = SubResource("StandardMaterial3D_wlxy5")
+
+[node name="Tree1-12" type="MeshInstance3D" parent="Environment/RootTree1"]
+transform = Transform3D(0.00486956, 0.00011043, -0.00112922, -0.000175775, 0.00498961, -0.000270047, 0.00112091, 0.0003027, 0.00486333, 138.967, 0.290272, 111.993)
+mesh = ExtResource("10_6iypd")
+skin = SubResource("Skin_tereu")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_cdqbm")
+surface_material_override/1 = SubResource("StandardMaterial3D_imku0")
+surface_material_override/2 = SubResource("StandardMaterial3D_wlxy5")
+
+[node name="Tree1-11" type="MeshInstance3D" parent="Environment/RootTree1"]
+transform = Transform3D(0.00486956, 0.00011043, -0.00112922, -0.000175775, 0.00498961, -0.000270047, 0.00112091, 0.0003027, 0.00486333, 106.336, -0.283203, 116.277)
+mesh = ExtResource("10_6iypd")
+skin = SubResource("Skin_tereu")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_cdqbm")
+surface_material_override/1 = SubResource("StandardMaterial3D_imku0")
+surface_material_override/2 = SubResource("StandardMaterial3D_wlxy5")
+
+[node name="Tree1-13" type="MeshInstance3D" parent="Environment/RootTree1"]
+transform = Transform3D(0.00486956, 0.00011043, -0.00112922, -0.000175775, 0.00498961, -0.000270047, 0.00112091, 0.0003027, 0.00486333, 93.8267, 0.606162, -80.614)
+mesh = ExtResource("10_6iypd")
+skin = SubResource("Skin_tereu")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_cdqbm")
+surface_material_override/1 = SubResource("StandardMaterial3D_imku0")
+surface_material_override/2 = SubResource("StandardMaterial3D_wlxy5")
+
+[node name="Tree1-14" type="MeshInstance3D" parent="Environment/RootTree1"]
+transform = Transform3D(0.00486956, 0.00011043, -0.00112922, -0.000175775, 0.00498961, -0.000270047, 0.00112091, 0.0003027, 0.00486333, 139.247, 0.606162, -20.0583)
+mesh = ExtResource("10_6iypd")
+skin = SubResource("Skin_tereu")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_cdqbm")
+surface_material_override/1 = SubResource("StandardMaterial3D_imku0")
+surface_material_override/2 = SubResource("StandardMaterial3D_wlxy5")
+
+[node name="Tree1-15" type="MeshInstance3D" parent="Environment/RootTree1"]
+transform = Transform3D(0.00486956, 0.00011043, -0.00112922, -0.000175775, 0.00498961, -0.000270047, 0.00112091, 0.0003027, 0.00486333, 138.702, -2.5714, -47.0567)
+mesh = ExtResource("10_6iypd")
+skin = SubResource("Skin_tereu")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_cdqbm")
+surface_material_override/1 = SubResource("StandardMaterial3D_imku0")
+surface_material_override/2 = SubResource("StandardMaterial3D_wlxy5")
+
+[node name="RootTree2" type="Node3D" parent="Environment"]
+
+[node name="Tree2_1" type="MeshInstance3D" parent="Environment/RootTree2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 93.3685, 4.16795, -113.642)
+mesh = ExtResource("11_tereu")
+skin = SubResource("Skin_wlxy5")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3v7ru")
+surface_material_override/1 = SubResource("StandardMaterial3D_tcnuu")
+surface_material_override/2 = SubResource("StandardMaterial3D_tereu")
+surface_material_override/3 = SubResource("StandardMaterial3D_i0g27")
+
+[node name="Tree2_2" type="MeshInstance3D" parent="Environment/RootTree2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 123.067, 1.73964, -58.1405)
+mesh = ExtResource("11_tereu")
+skin = SubResource("Skin_wlxy5")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3v7ru")
+surface_material_override/1 = SubResource("StandardMaterial3D_tcnuu")
+surface_material_override/2 = SubResource("StandardMaterial3D_tuemg")
+
+[node name="Tree2_3" type="MeshInstance3D" parent="Environment/RootTree2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 97.8257, 6.06293, 6.28511)
+mesh = ExtResource("11_tereu")
+skin = SubResource("Skin_wlxy5")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3v7ru")
+surface_material_override/1 = SubResource("StandardMaterial3D_tcnuu")
+surface_material_override/2 = SubResource("StandardMaterial3D_tuemg")
+
+[node name="UploadsFiles885287Simple+tree3" type="MeshInstance3D" parent="Environment/RootTree2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 89.6878, 6.06293, -95.3604)
+mesh = ExtResource("11_tereu")
+skin = SubResource("Skin_wlxy5")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3v7ru")
+surface_material_override/1 = SubResource("StandardMaterial3D_tcnuu")
+surface_material_override/2 = SubResource("StandardMaterial3D_tuemg")
+
+[node name="UploadsFiles885287Simple+tree4" type="MeshInstance3D" parent="Environment/RootTree2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 84.8801, 6.06293, -53.7929)
+mesh = ExtResource("11_tereu")
+skin = SubResource("Skin_wlxy5")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3v7ru")
+surface_material_override/1 = SubResource("StandardMaterial3D_tcnuu")
+surface_material_override/2 = SubResource("StandardMaterial3D_tuemg")
+
+[node name="UploadsFiles885287Simple+tree5" type="MeshInstance3D" parent="Environment/RootTree2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 91.7903, 6.06293, -28.6128)
+mesh = ExtResource("11_tereu")
+skin = SubResource("Skin_wlxy5")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3v7ru")
+surface_material_override/1 = SubResource("StandardMaterial3D_tcnuu")
+surface_material_override/2 = SubResource("StandardMaterial3D_tuemg")
+
+[node name="UploadsFiles885287Simple+tree6" type="MeshInstance3D" parent="Environment/RootTree2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 99.0676, 6.06293, 90.6643)
+mesh = ExtResource("11_tereu")
+skin = SubResource("Skin_wlxy5")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3v7ru")
+surface_material_override/1 = SubResource("StandardMaterial3D_tcnuu")
+surface_material_override/2 = SubResource("StandardMaterial3D_tuemg")
+
+[node name="UploadsFiles885287Simple+tree7" type="MeshInstance3D" parent="Environment/RootTree2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 99.8938, 6.06293, 56.9069)
+mesh = ExtResource("11_tereu")
+skin = SubResource("Skin_wlxy5")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3v7ru")
+surface_material_override/1 = SubResource("StandardMaterial3D_tcnuu")
+surface_material_override/2 = SubResource("StandardMaterial3D_tuemg")
+
+[node name="UploadsFiles885287Simple+tree8" type="MeshInstance3D" parent="Environment/RootTree2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 94.6475, 6.06293, 25.9675)
+mesh = ExtResource("11_tereu")
+skin = SubResource("Skin_wlxy5")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3v7ru")
+surface_material_override/1 = SubResource("StandardMaterial3D_tcnuu")
+surface_material_override/2 = SubResource("StandardMaterial3D_tuemg")
+
+[node name="UploadsFiles885287Simple+tree9" type="MeshInstance3D" parent="Environment/RootTree2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 140.878, 6.06293, 85.8896)
+mesh = ExtResource("11_tereu")
+skin = SubResource("Skin_wlxy5")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3v7ru")
+surface_material_override/1 = SubResource("StandardMaterial3D_tcnuu")
+surface_material_override/2 = SubResource("StandardMaterial3D_tuemg")
+
+[node name="UploadsFiles885287Simple+tree10" type="MeshInstance3D" parent="Environment/RootTree2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 136.574, 6.06293, 21.0583)
+mesh = ExtResource("11_tereu")
+skin = SubResource("Skin_wlxy5")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3v7ru")
+surface_material_override/1 = SubResource("StandardMaterial3D_tcnuu")
+surface_material_override/2 = SubResource("StandardMaterial3D_tuemg")
+
+[node name="UploadsFiles885287Simple+tree11" type="MeshInstance3D" parent="Environment/RootTree2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 138.969, 6.06293, 44.4711)
+mesh = ExtResource("11_tereu")
+skin = SubResource("Skin_wlxy5")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3v7ru")
+surface_material_override/1 = SubResource("StandardMaterial3D_tcnuu")
+surface_material_override/2 = SubResource("StandardMaterial3D_tuemg")
+
+[node name="UploadsFiles885287Simple+tree12" type="MeshInstance3D" parent="Environment/RootTree2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 142.01, -1.36592, -35.1145)
+mesh = ExtResource("11_tereu")
+skin = SubResource("Skin_wlxy5")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3v7ru")
+surface_material_override/1 = SubResource("StandardMaterial3D_tcnuu")
+surface_material_override/2 = SubResource("StandardMaterial3D_tuemg")
+
+[node name="UploadsFiles885287Simple+tree13" type="MeshInstance3D" parent="Environment/RootTree2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 135.522, 4.24915, -103.79)
+mesh = ExtResource("11_tereu")
+skin = SubResource("Skin_wlxy5")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3v7ru")
+surface_material_override/1 = SubResource("StandardMaterial3D_tcnuu")
+surface_material_override/2 = SubResource("StandardMaterial3D_tuemg")
+
+[node name="Tree2_4" type="MeshInstance3D" parent="Environment/RootTree2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 131.533, 6.11238, -12.2167)
+mesh = ExtResource("11_tereu")
+skin = SubResource("Skin_wlxy5")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3v7ru")
+surface_material_override/1 = SubResource("StandardMaterial3D_tcnuu")
+surface_material_override/2 = SubResource("StandardMaterial3D_tereu")
+surface_material_override/3 = SubResource("StandardMaterial3D_i0g27")
+
+[node name="Tree2_5" type="MeshInstance3D" parent="Environment/RootTree2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 103.795, 6.11238, 104.412)
+mesh = ExtResource("11_tereu")
+skin = SubResource("Skin_wlxy5")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3v7ru")
+surface_material_override/1 = SubResource("StandardMaterial3D_tcnuu")
+surface_material_override/2 = SubResource("StandardMaterial3D_tereu")
+surface_material_override/3 = SubResource("StandardMaterial3D_i0g27")
+
+[node name="Tree2_6" type="MeshInstance3D" parent="Environment/RootTree2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 143.012, 6.11238, -67.3862)
+mesh = ExtResource("11_tereu")
+skin = SubResource("Skin_wlxy5")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3v7ru")
+surface_material_override/1 = SubResource("StandardMaterial3D_tcnuu")
+surface_material_override/2 = SubResource("StandardMaterial3D_tereu")
+surface_material_override/3 = SubResource("StandardMaterial3D_i0g27")
+
+[node name="Tree2_7" type="MeshInstance3D" parent="Environment/RootTree2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 110.901, 6.11238, 141.342)
+mesh = ExtResource("11_tereu")
+skin = SubResource("Skin_wlxy5")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3v7ru")
+surface_material_override/1 = SubResource("StandardMaterial3D_tcnuu")
+surface_material_override/2 = SubResource("StandardMaterial3D_tereu")
+surface_material_override/3 = SubResource("StandardMaterial3D_i0g27")
+
+[node name="player" type="CharacterBody3D" parent="." groups=["player"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 113.884, 0.572, -125.505)
+script = ExtResource("12_cdqbm")
+
+[node name="XROrigin3D" type="XROrigin3D" parent="player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0478363, -0.275443, -0.153038)
+
+[node name="XRCamera3D" type="XRCamera3D" parent="player/XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.978804, 0)
+
+[node name="LeftController" type="XRController3D" parent="player/XROrigin3D"]
+tracker = &"left_hand"
+
+[node name="LeftHandArea" type="Area3D" parent="player/XROrigin3D/LeftController" groups=["hand"]]
+script = ExtResource("13_jsnrv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="player/XROrigin3D/LeftController/LeftHandArea"]
+shape = SubResource("SphereShape3D_tuemg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="player/XROrigin3D/LeftController/LeftHandArea"]
+mesh = SubResource("SphereMesh_i0g27")
+
+[node name="RightController" type="XRController3D" parent="player/XROrigin3D"]
+tracker = &"right_hand"
+
+[node name="RightHandArea" type="Area3D" parent="player/XROrigin3D/RightController" groups=["hand"]]
+script = ExtResource("13_jsnrv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="player/XROrigin3D/RightController/RightHandArea"]
+shape = SubResource("SphereShape3D_tuemg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="player/XROrigin3D/RightController/RightHandArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.138985, -0.129753, -0.0729599)
+mesh = SubResource("SphereMesh_ealrb")
+
+[node name="Flashlight" type="Node3D" parent="player/XROrigin3D/RightController"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="player/XROrigin3D/RightController/Flashlight"]
+transform = Transform3D(0.03, 0, 0, 0, -1.31134e-09, -0.03, 0, 0.03, -1.31134e-09, 0, 0, -0.1)
+material_override = SubResource("StandardMaterial3D_jsnrv")
+mesh = SubResource("CylinderMesh_jsnrv")
+
+[node name="Light" type="SpotLight3D" parent="player/XROrigin3D/RightController/Flashlight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.18)
+shadow_enabled = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.440369)
+mesh = SubResource("CapsuleMesh_cdqbm")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.426941)
+shape = SubResource("CapsuleShape3D_imku0")
+
+[node name="Rock" parent="." instance=ExtResource("17_lggff")]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, 139.827, -2.86496, 283.207)
+
+[node name="Animals" type="Node3D" parent="."]
+
+[node name="Bear" type="MeshInstance3D" parent="Animals" groups=["animal"]]
+transform = Transform3D(0.000656824, -0.0199892, 2.09434e-11, 0.00404741, 0.000132993, 0.0195857, -0.0195752, -0.000643219, 0.00404959, 118.395, -0.143549, -1.43241)
+mesh = ExtResource("13_tuemg")
+skeleton = NodePath("../..")
+
+[node name="Deer" type="MeshInstance3D" parent="Animals" groups=["animal"]]
+transform = Transform3D(0.002, 0, 0, 0, 0.002, 0, 0, 0, 0.002, 121.049, 0.110656, 17.6461)
+mesh = ExtResource("14_i0g27")
+skeleton = NodePath("../..")
+
+[node name="Giraffe" type="MeshInstance3D" parent="Animals" groups=["animal"]]
+transform = Transform3D(-0.44765, 0, 0.894209, 0, 1, 0, -0.894209, 0, -0.44765, 107.531, 1.30799, 32.8533)
+mesh = ExtResource("15_ealrb")
+skeleton = NodePath("../..")
+
+[node name="Elephant" type="MeshInstance3D" parent="Animals" groups=["animal"]]
+transform = Transform3D(0.00043874, -0.0199952, -1.03186e-12, 0.000315829, 6.93001e-06, 0.0199975, -0.0199927, -0.000438685, 0.000315905, 114.79, 0.000710487, 7.00675)
+mesh = ExtResource("16_jsnrv")
+skeleton = NodePath("../..")
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="."]
+transform = Transform3D(0.0516388, -0.998666, 0, 0.998666, 0.0516388, 0, 0, 0, 1, 115.898, 1.80087, -23.7556)
+height = 111.099
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="."]
+transform = Transform3D(0.0516388, -0.998666, 0, 0.998666, 0.0516388, 0, 0, 0, 1, 133.775, 1.80087, 185.617)
+height = 111.099
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="."]
+transform = Transform3D(0.0516388, -0.998666, 0, 0.998666, 0.0516388, 0, 0, 0, 1, 128.348, 1.80087, 72.3581)
+height = 111.099
+
+[node name="TeleportPad_0_to_1" parent="." groups=["ore_to_animals"] instance=ExtResource("18_i0g27")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 119.557, 1.08363, -24.6911)
+target_position = Vector3(121.049, 1.992, -18.705)
+
+[node name="TeleportPad_1_to_dark" parent="." groups=["animals_to_equip"] instance=ExtResource("18_i0g27")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 126.715, 0.483355, 70.5124)
+
+[node name="TeleportPad" parent="." groups=["equip_to_level2"] instance=ExtResource("18_i0g27")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 134.744, 0.4, 183.253)
+
+[node name="Ore" parent="." instance=ExtResource("20_lggff")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 130.922, 0.5, -98.05)
+
+[node name="Ore2" parent="." instance=ExtResource("20_lggff")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 90.7758, 0.572325, -62.7197)
+
+[node name="Ore3" parent="." instance=ExtResource("20_lggff")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 128.211, 0.5, -45.7276)
+
+[node name="Ore4" parent="." instance=ExtResource("20_lggff")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 113.964, 0.5, -75.4415)
+
+[node name="Ore5" parent="." instance=ExtResource("20_lggff")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 106.828, 0.5, -103.495)
