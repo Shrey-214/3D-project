@@ -235,7 +235,7 @@ var animals_fed: int = 0
 var total_animals: int = 0
 
 var equipment_count: int = 0
-const EQUIP_TARGET := 5
+const EQUIP_TARGET := 4
 
 @onready var dir_light: DirectionalLight3D = $"../DirectionalLight3D"
 
@@ -246,6 +246,8 @@ const EQUIP_TARGET := 5
 
 @onready var flashlight: Node3D = $XROrigin3D/RightController/Flashlight
 
+@onready var rapid_tp = $RapidTeleport  # if you attach script to a child node
+
 const MOVE_SPEED := 5.0
 const INPUT_DEADZONE := 0.2
 const SNAP_ANGLE_DEG := 30.0
@@ -255,6 +257,7 @@ var _turn_cooldown: float = 0.0
 
 func _ready() -> void:
 	_start_level0()
+	_activate_teleport_group("equip_to_level2")
 
 func _physics_process(delta: float) -> void:
 	var move_input := _get_move_input()
@@ -322,8 +325,10 @@ func _start_level0() -> void:
 	animals_fed = 0
 	equipment_count = 0
 	_set_dark_jungle(true)
+	
 
 	_enable_stick(false)
+	_enable_rapid_teleport(false)
 
 	if flashlight:
 		flashlight.visible = false
@@ -336,6 +341,7 @@ func _start_level1_animals() -> void:
 	animals_fed = 0
 
 	_enable_stick(true)
+	_enable_rapid_teleport(false)
 
 	if flashlight:
 		flashlight.visible = false
@@ -347,6 +353,8 @@ func _start_level1_equip() -> void:
 	_set_dark_jungle(true)
 
 	_enable_stick(false)
+	
+	_enable_rapid_teleport(false)
 
 	if flashlight:
 		flashlight.visible = true
@@ -359,6 +367,8 @@ func _start_level2_river() -> void:
 	_set_dark_jungle(false)
 
 	_enable_stick(false)
+	
+	_enable_rapid_teleport(true)
 
 	if flashlight:
 		flashlight.visible = false
@@ -402,3 +412,31 @@ func _activate_teleport_group(group_name: String) -> void:
 
 func is_in_animals_phase() -> bool:
 	return phase == GamePhase.LEVEL1_ANIMALS
+	
+
+func _enable_rapid_teleport(on: bool) -> void:
+	if xr_origin and xr_origin.has_method("set_enabled"):
+		xr_origin.call("set_enabled", on)
+
+func on_rock_destroyed() -> void:
+	if phase != GamePhase.LEVEL2_RIVER:
+		return
+
+	phase = GamePhase.COMPLETE
+	print("GAME OVER: Rock destroyed ✅")
+
+	_enable_stick(false)
+	_enable_rapid_teleport(false)
+
+	if flashlight:
+		flashlight.visible = false
+
+func add_equipment(amount: int = 1) -> void:
+	if phase != GamePhase.LEVEL1_EQUIP:
+		return
+
+	equipment_count += amount
+	print("Equipment:", equipment_count, "/", EQUIP_TARGET)
+
+	if equipment_count >= EQUIP_TARGET:
+		_activate_teleport_group("equip_to_level2")

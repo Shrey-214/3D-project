@@ -1,16 +1,17 @@
-[gd_scene load_steps=52 format=3 uid="uid://hit6ddguobp4"]
+[gd_scene load_steps=72 format=3 uid="uid://hit6ddguobp4"]
 
 [ext_resource type="Script" uid="uid://ci4kln15ugy4u" path="res://starter.gd" id="1_4arys"]
 [ext_resource type="Script" uid="uid://ojals4h4iyqn" path="res://addons/zylann.hterrain/hterrain.gd" id="1_a0tk4"]
 [ext_resource type="Resource" path="res://Data/data.hterrain" id="2_r3fl7"]
 [ext_resource type="Script" uid="uid://dwbnr7hog81rd" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="3_jka67"]
 [ext_resource type="Shader" uid="uid://bbwll6pmkmdb7" path="res://addons/zylann.hterrain/shaders/lookdev.gdshader" id="3_jsk3o"]
-[ext_resource type="Texture2D" uid="uid://ckgsmpqwwh4l5" path="res://Data/forest_t/node_3d_slot0_albedo_bump.png" id="4_wc5p8"]
-[ext_resource type="Texture2D" uid="uid://dqancugixfg31" path="res://Data/forest_t/node_3d_slot1_albedo_bump.png" id="5_jsk3o"]
-[ext_resource type="Texture2D" uid="uid://bvwxvinsh3w36" path="res://Data/forest_t/node_3d_slot0_normal_roughness.png" id="6_4arys"]
-[ext_resource type="Texture2D" uid="uid://d4dji08dywr5d" path="res://Data/forest_t/node_3d_slot1_normal_roughness.png" id="7_6iypd"]
+[ext_resource type="Texture2D" uid="uid://ca7u67vs35rse" path="res://node_3d_slot0_albedo_bump.png" id="6_nu31w"]
+[ext_resource type="Texture2D" uid="uid://cwogvdd8tmdgm" path="res://node_3d_slot1_albedo_bump.png" id="7_obt1j"]
+[ext_resource type="Texture2D" uid="uid://da026o8hjpy2j" path="res://node_3d_slot0_normal_roughness.png" id="8_2yde8"]
+[ext_resource type="Texture2D" uid="uid://csy7jovuqtdak" path="res://node_3d_slot1_normal_roughness.png" id="9_id0nj"]
 [ext_resource type="ArrayMesh" uid="uid://bsq1murba5wg1" path="res://Assets/Trees/uploads_files_1970932_conifer_macedonian_pine.obj" id="10_6iypd"]
 [ext_resource type="Script" uid="uid://m5pehm1dv3j" path="res://player.gd" id="12_cdqbm"]
+[ext_resource type="Script" uid="uid://c10st8csn1bfx" path="res://rapid_teleport.gd" id="12_nu31w"]
 [ext_resource type="Script" uid="uid://br12tl3f32k7j" path="res://hand_interactor.gd" id="13_jsnrv"]
 [ext_resource type="Script" uid="uid://35q24caq3nhk" path="res://right_controller_stick.gd" id="13_s0gvp"]
 [ext_resource type="ArrayMesh" uid="uid://brik7tjllimpt" path="res://Assets/PolarBear_V2_L1.123c1a5cda02-33e9-424d-bcb4-f0179e384160/11503_PolarBear_V2_FINAL.obj" id="13_tuemg"]
@@ -18,17 +19,21 @@
 [ext_resource type="Script" uid="uid://ccg3kmwuoiunm" path="res://LineRenderer.gd" id="14_s0gvp"]
 [ext_resource type="ArrayMesh" uid="uid://b43b5snwuhlnu" path="res://Assets/Giraffe/Giraffe.OBJ" id="15_ealrb"]
 [ext_resource type="ArrayMesh" uid="uid://codsanw7p6v4k" path="res://Assets/Elephant_v2_L1.123c12499572-8ec8-495e-8658-c2136c4c966f/11499_Elephant_v2.obj" id="16_jsnrv"]
+[ext_resource type="Script" uid="uid://l86h7hxx3kdb" path="res://rock_hit_area.gd" id="17_2yde8"]
 [ext_resource type="PackedScene" uid="uid://bb6bvvxx8ofh1" path="res://Assets/moss_rock_06_free_rock_pack_vol.1.glb" id="17_lggff"]
 [ext_resource type="Script" uid="uid://ctj7fbhivv2qt" path="res://animal_feed_area.gd" id="17_vxd74"]
 [ext_resource type="PackedScene" uid="uid://du1u8h4p3dw4f" path="res://TeleportPad.tscn" id="18_i0g27"]
 [ext_resource type="PackedScene" uid="uid://w8shvcg66yug" path="res://ore.tscn" id="20_lggff"]
 [ext_resource type="ArrayMesh" uid="uid://camu2p8uooy00" path="res://banana.obj" id="21_s0gvp"]
 [ext_resource type="Script" uid="uid://dg5chabkmvbnb" path="res://fruit_pickup_area.gd" id="24_dhlwf"]
+[ext_resource type="ArrayMesh" uid="uid://bc5457pxap51i" path="res://Assets/crystal/Crystal.obj" id="25_5t8nk"]
+[ext_resource type="ArrayMesh" uid="uid://ch4x7w5yypkrb" path="res://Assets/21341_Star_v2.obj" id="26_j3e5s"]
+[ext_resource type="Script" uid="uid://bwq1s4kr1codv" path="res://equip_item.gd" id="27_obt1j"]
 
 [sub_resource type="Resource" id="Resource_i5arm"]
 script = ExtResource("3_jka67")
 mode = 0
-textures = [[ExtResource("4_wc5p8"), ExtResource("5_jsk3o")], [ExtResource("6_4arys"), ExtResource("7_6iypd")]]
+textures = [[ExtResource("6_nu31w"), ExtResource("7_obt1j")], [ExtResource("8_2yde8"), ExtResource("9_id0nj")]]
 
 [sub_resource type="BoxMesh" id="BoxMesh_4arys"]
 size = Vector3(600, 1, 600)
@@ -210,13 +215,34 @@ albedo_color = Color(0.333333, 0.12549, 0.12549, 1)
 
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_lggff"]
 
+[sub_resource type="BoxMesh" id="BoxMesh_j3e5s"]
+size = Vector3(0.3, 0.05, 0.3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nu31w"]
+albedo_color = Color(1, 0, 0.0117647, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nu31w"]
+size = Vector3(0.288376, 0.653443, 0.579668)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2yde8"]
+albedo_color = Color(0, 0, 0, 1)
+
 [sub_resource type="SphereShape3D" id="SphereShape3D_s0gvp"]
 radius = 68.066
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_id0nj"]
+albedo_color = Color(0.996078, 0.717647, 0.407843, 1)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_vxd74"]
 radius = 100.0
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1q667"]
+albedo_color = Color(0.877299, 0.50428, 0.00324228, 1)
+
 [sub_resource type="SphereShape3D" id="SphereShape3D_dhlwf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ype4i"]
+albedo_color = Color(0.399415, 0.459155, 0.532278, 1)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_5t8nk"]
 radius = 9.959
@@ -227,6 +253,39 @@ albedo_color = Color(1, 1, 0, 1)
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s0gvp"]
 radius = 2.11987
 height = 18.2058
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_riyl1"]
+albedo_color = Color(0, 0.937255, 0.937255, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pb8dk"]
+albedo_color = Color(0, 0.513726, 1, 1)
+emission_enabled = true
+emission = Color(0, 0, 0.960784, 1)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_nu31w"]
+height = 14.2459
+radius = 1.04834
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2mu51"]
+albedo_color = Color(1, 0.529412, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vmvb8"]
+albedo_color = Color(0.786916, 0.0004815, 0.78691, 1)
+emission_enabled = true
+emission = Color(0.614408, 1.02518e-05, 0.42708, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4i7mf"]
+albedo_color = Color(1, 0.304179, 0.311172, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3s0n5"]
+albedo_color = Color(0.933326, 4.81308e-06, 9.62615e-07, 1)
+emission_enabled = true
+emission = Color(0.580392, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qpkl4"]
+albedo_color = Color(1, 1, 0, 1)
+emission_enabled = true
+emission = Color(1, 0.976471, 0, 1)
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_4arys")
@@ -506,6 +565,10 @@ script = ExtResource("12_cdqbm")
 
 [node name="XROrigin3D" type="XROrigin3D" parent="player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0478363, -0.275443, -0.153038)
+script = ExtResource("12_nu31w")
+teleport_ray_path = NodePath("RightController/TeleportRay")
+teleport_marker_path = NodePath("../TeleportMarker/MeshInstance3D")
+right_controller_path = NodePath("RightController")
 
 [node name="XRCamera3D" type="XRCamera3D" parent="player/XROrigin3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.978804, 0)
@@ -548,11 +611,32 @@ light_energy = 10.0
 shadow_enabled = true
 
 [node name="StickVisual" type="MeshInstance3D" parent="player/XROrigin3D/RightController"]
+visible = false
 mesh = SubResource("ImmediateMesh_lggff")
 script = ExtResource("14_s0gvp")
 
+[node name="TeleportRay" type="RayCast3D" parent="player/XROrigin3D/RightController"]
+visible = false
+target_position = Vector3(0, 0, -12)
+
+[node name="TeleportMarker" type="Node3D" parent="player"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="player/TeleportMarker"]
+visible = false
+mesh = SubResource("BoxMesh_j3e5s")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_nu31w")
+
 [node name="Rock" parent="." instance=ExtResource("17_lggff")]
 transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, 139.827, -2.86496, 283.207)
+
+[node name="HitArea" type="Area3D" parent="Rock" groups=["rock"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.929789, 0.988688, -3.32204)
+script = ExtResource("17_2yde8")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Rock/HitArea"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0.242952, -0.585878, 1.42293)
+shape = SubResource("BoxShape3D_nu31w")
 
 [node name="Animals" type="Node3D" parent="."]
 
@@ -560,6 +644,7 @@ transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, 139.827, -2.86496, 283.207)
 transform = Transform3D(0.000656824, -0.0199892, 2.09434e-11, 0.00404741, 0.000132993, 0.0195857, -0.0195752, -0.000643219, 0.00404959, 118.395, -0.143549, -1.43241)
 mesh = ExtResource("13_tuemg")
 skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_2yde8")
 
 [node name="FeedArea" type="Area3D" parent="Animals/Bear" groups=["animal"]]
 script = ExtResource("17_vxd74")
@@ -572,6 +657,7 @@ shape = SubResource("SphereShape3D_s0gvp")
 transform = Transform3D(0.002, 0, 0, 0, 0.002, 0, 0, 0, 0.002, 121.049, 0.110656, 17.6461)
 mesh = ExtResource("14_i0g27")
 skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_id0nj")
 
 [node name="FeedArea" type="Area3D" parent="Animals/Deer" groups=["animal"]]
 script = ExtResource("17_vxd74")
@@ -584,6 +670,7 @@ shape = SubResource("SphereShape3D_vxd74")
 transform = Transform3D(-0.44765, 0, 0.894209, 0, 1, 0, -0.894209, 0, -0.44765, 107.531, 1.30799, 32.8533)
 mesh = ExtResource("15_ealrb")
 skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_1q667")
 
 [node name="FeedArea" type="Area3D" parent="Animals/Giraffe" groups=["animal"]]
 script = ExtResource("17_vxd74")
@@ -596,6 +683,7 @@ shape = SubResource("SphereShape3D_dhlwf")
 transform = Transform3D(0.00043874, -0.0199952, -1.03186e-12, 0.000315829, 6.93001e-06, 0.0199975, -0.0199927, -0.000438685, 0.000315905, 114.79, 0.000710487, 7.00675)
 mesh = ExtResource("16_jsnrv")
 skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_ype4i")
 
 [node name="FeedArea" type="Area3D" parent="Animals/Elephant" groups=["animal"]]
 script = ExtResource("17_vxd74")
@@ -610,7 +698,7 @@ transform = Transform3D(0.0516388, -0.998666, 0, 0.998666, 0.0516388, 0, 0, 0, 1
 height = 111.099
 
 [node name="CSGCylinder3D3" type="CSGCylinder3D" parent="."]
-transform = Transform3D(0.0516388, -0.998666, 0, 0.998666, 0.0516388, 0, 0, 0, 1, 133.775, 1.80087, 157.109)
+transform = Transform3D(0.0516388, -0.998666, 0, 0.998666, 0.0516388, 0, 0, 0, 1, 133.694, 1.80087, 157.181)
 height = 111.099
 
 [node name="CSGCylinder3D2" type="CSGCylinder3D" parent="."]
@@ -627,6 +715,7 @@ target_position = Vector3(126.7, 1.251, 79.71)
 
 [node name="TeleportPad" parent="." groups=["equip_to_level2"] instance=ExtResource("18_i0g27")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 134.744, 0.4, 154.689)
+target_position = Vector3(134, 0.4, 160)
 
 [node name="Ore" parent="." instance=ExtResource("20_lggff")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 130.922, 0.5, -98.05)
@@ -700,3 +789,60 @@ script = ExtResource("24_dhlwf")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="BananaRoot/Banana4/Area3D"]
 transform = Transform3D(0.229364, 0.871219, 0.434014, -0.957257, 0.282632, -0.0614605, -0.176212, -0.401366, 0.898807, 1.55042, 0.249496, -1.52905)
 shape = SubResource("CapsuleShape3D_s0gvp")
+
+[node name="CrystalWandRoot" type="Node3D" parent="."]
+
+[node name="Crystal" type="MeshInstance3D" parent="CrystalWandRoot"]
+transform = Transform3D(0.255861, 0, 0, 0, 0.424157, 0, 0, 0, 0.288377, 114.488, 0.513831, 130.277)
+mesh = ExtResource("25_5t8nk")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_riyl1")
+surface_material_override/1 = SubResource("StandardMaterial3D_pb8dk")
+
+[node name="Area3D" type="Area3D" parent="CrystalWandRoot/Crystal" groups=["equip"]]
+script = ExtResource("27_obt1j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CrystalWandRoot/Crystal/Area3D"]
+transform = Transform3D(0.999999, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.50415, 0)
+shape = SubResource("CylinderShape3D_nu31w")
+
+[node name="Crystal2" type="MeshInstance3D" parent="CrystalWandRoot"]
+transform = Transform3D(0.255861, 0, 0, 0, 0.424157, 0, 0, 0, 0.288377, 138.452, 0.513831, 107.319)
+mesh = ExtResource("25_5t8nk")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_2mu51")
+surface_material_override/1 = SubResource("StandardMaterial3D_vmvb8")
+
+[node name="Area3D" type="Area3D" parent="CrystalWandRoot/Crystal2" groups=["equip"]]
+script = ExtResource("27_obt1j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CrystalWandRoot/Crystal2/Area3D"]
+transform = Transform3D(0.999999, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.50415, 0)
+shape = SubResource("CylinderShape3D_nu31w")
+
+[node name="Crystal3" type="MeshInstance3D" parent="CrystalWandRoot"]
+transform = Transform3D(0.0439385, -0.417438, -0.0126995, 0.252053, 0.0729103, 0, 0.00193684, -0.0184009, 0.288097, 128.178, 0.513831, 125.329)
+mesh = ExtResource("25_5t8nk")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_4i7mf")
+surface_material_override/1 = SubResource("StandardMaterial3D_3s0n5")
+
+[node name="Area3D" type="Area3D" parent="CrystalWandRoot/Crystal3" groups=["equip"]]
+script = ExtResource("27_obt1j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CrystalWandRoot/Crystal3/Area3D"]
+transform = Transform3D(0.999999, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.50415, 0)
+shape = SubResource("CylinderShape3D_nu31w")
+
+[node name="Wand" type="MeshInstance3D" parent="CrystalWandRoot"]
+transform = Transform3D(0.413532, 0, 0, 0, 0.543118, 0, 0, 0, 0.304982, 141.635, 0.8008, 140.361)
+mesh = ExtResource("26_j3e5s")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_qpkl4")
+
+[node name="Area3D" type="Area3D" parent="CrystalWandRoot/Wand" groups=["equip"]]
+script = ExtResource("27_obt1j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CrystalWandRoot/Wand/Area3D"]
+transform = Transform3D(-0.0207156, 0.999785, 0, -0.999784, -0.0207156, 0, 0, 0, 1, 0.979034, 0.949216, 0.495453)
+shape = SubResource("CylinderShape3D_nu31w")
