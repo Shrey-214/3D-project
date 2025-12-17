@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://hit6ddguobp4"]
+[gd_scene load_steps=52 format=3 uid="uid://hit6ddguobp4"]
 
 [ext_resource type="Script" uid="uid://ci4kln15ugy4u" path="res://starter.gd" id="1_4arys"]
 [ext_resource type="Script" uid="uid://ojals4h4iyqn" path="res://addons/zylann.hterrain/hterrain.gd" id="1_a0tk4"]
@@ -221,7 +221,12 @@ radius = 100.0
 [sub_resource type="SphereShape3D" id="SphereShape3D_5t8nk"]
 radius = 9.959
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dhlwf"]
+albedo_color = Color(1, 1, 0, 1)
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s0gvp"]
+radius = 2.11987
+height = 18.2058
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_4arys")
@@ -555,7 +560,7 @@ transform = Transform3D(0.000656824, -0.0199892, 2.09434e-11, 0.00404741, 0.0001
 mesh = ExtResource("13_tuemg")
 skeleton = NodePath("../..")
 
-[node name="FeedArea" type="Area3D" parent="Animals/Bear"]
+[node name="FeedArea" type="Area3D" parent="Animals/Bear" groups=["animal"]]
 script = ExtResource("17_vxd74")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Animals/Bear/FeedArea"]
@@ -567,7 +572,7 @@ transform = Transform3D(0.002, 0, 0, 0, 0.002, 0, 0, 0, 0.002, 121.049, 0.110656
 mesh = ExtResource("14_i0g27")
 skeleton = NodePath("../..")
 
-[node name="FeedArea" type="Area3D" parent="Animals/Deer"]
+[node name="FeedArea" type="Area3D" parent="Animals/Deer" groups=["animal"]]
 script = ExtResource("17_vxd74")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Animals/Deer/FeedArea"]
@@ -579,7 +584,7 @@ transform = Transform3D(-0.44765, 0, 0.894209, 0, 1, 0, -0.894209, 0, -0.44765, 
 mesh = ExtResource("15_ealrb")
 skeleton = NodePath("../..")
 
-[node name="FeedArea" type="Area3D" parent="Animals/Giraffe"]
+[node name="FeedArea" type="Area3D" parent="Animals/Giraffe" groups=["animal"]]
 script = ExtResource("17_vxd74")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Animals/Giraffe/FeedArea"]
@@ -591,7 +596,7 @@ transform = Transform3D(0.00043874, -0.0199952, -1.03186e-12, 0.000315829, 6.930
 mesh = ExtResource("16_jsnrv")
 skeleton = NodePath("../..")
 
-[node name="FeedArea" type="Area3D" parent="Animals/Elephant"]
+[node name="FeedArea" type="Area3D" parent="Animals/Elephant" groups=["animal"]]
 script = ExtResource("17_vxd74")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Animals/Elephant/FeedArea"]
@@ -616,7 +621,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 119.557, 1.08363, -24.6911)
 target_position = Vector3(121.049, 1.992, -18.705)
 
 [node name="TeleportPad_1_to_dark" parent="." groups=["animals_to_equip"] instance=ExtResource("18_i0g27")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 126.715, 0.483355, 70.5124)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 126.715, 1.25081, 70.5124)
 
 [node name="TeleportPad" parent="." groups=["equip_to_level2"] instance=ExtResource("18_i0g27")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 134.744, 0.4, 183.253)
@@ -639,14 +644,57 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 106.828, 0.5, -103.495)
 [node name="BananaRoot" type="Node3D" parent="."]
 
 [node name="Banana" type="MeshInstance3D" parent="BananaRoot"]
-transform = Transform3D(1, 0, 0, 0, 1.02862, 0, 0, 0, 1, 121.418, -0.171196, 51.9782)
+transform = Transform3D(0.0110183, -0.0111012, 0.0484272, 0.0344195, -0.15126, -0.0110551, 0.0268122, 0.198739, -0.00570903, 134.444, 2.9898, 64.16)
 mesh = ExtResource("21_s0gvp")
 skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_dhlwf")
 
-[node name="Area3D" type="Area3D" parent="BananaRoot" groups=["fruit"]]
-transform = Transform3D(1, 0, 0, 0, 1.02862, 0, 0, 0, 1, 121.418, -0.171196, 51.9782)
+[node name="Area3D" type="Area3D" parent="BananaRoot/Banana" groups=["fruit"]]
+transform = Transform3D(1, -4.76837e-07, -7.45058e-09, -7.45058e-09, 1, 2.40281e-07, 1.11759e-07, -5.06639e-07, 1, 1.81689, 1.51604, -0.425049)
 script = ExtResource("24_dhlwf")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="BananaRoot/Area3D"]
-transform = Transform3D(0.254102, 4.83428, 0, -0.863586, 1.42244, 0, 0, 0, 1, 4.16549, 0.743179, -0.801182)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BananaRoot/Banana/Area3D"]
+transform = Transform3D(0.229364, 0.871219, 0.434014, -0.957257, 0.282632, -0.0614605, -0.176212, -0.401366, 0.898807, 1.55042, 0.249496, -1.52905)
+shape = SubResource("CapsuleShape3D_s0gvp")
+
+[node name="Banana2" type="MeshInstance3D" parent="BananaRoot"]
+transform = Transform3D(-0.0195264, -0.0575609, -0.0435518, 0.0404834, -0.0145968, -0.0216365, 0.00219493, -0.242845, 0.0116235, 100.41, 5.32361, -6.98012)
+mesh = ExtResource("21_s0gvp")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_dhlwf")
+
+[node name="Area3D" type="Area3D" parent="BananaRoot/Banana2" groups=["fruit"]]
+transform = Transform3D(1, -4.76837e-07, -7.45058e-09, -7.45058e-09, 1, 2.40281e-07, 1.11759e-07, -5.06639e-07, 1, 1.81689, 1.51604, -0.425049)
+script = ExtResource("24_dhlwf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BananaRoot/Banana2/Area3D"]
+transform = Transform3D(0.229364, 0.871219, 0.434014, -0.957257, 0.282632, -0.0614605, -0.176212, -0.401366, 0.898807, 1.55042, 0.249496, -1.52905)
+shape = SubResource("CapsuleShape3D_s0gvp")
+
+[node name="Banana3" type="MeshInstance3D" parent="BananaRoot"]
+transform = Transform3D(0.0110183, -0.0111012, 0.0484272, 0.0344195, -0.15126, -0.0110551, 0.0268122, 0.198739, -0.00570903, 136.167, 3.07546, 10.9019)
+mesh = ExtResource("21_s0gvp")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_dhlwf")
+
+[node name="Area3D" type="Area3D" parent="BananaRoot/Banana3" groups=["fruit"]]
+transform = Transform3D(1, -4.76837e-07, -7.45058e-09, -7.45058e-09, 1, 2.40281e-07, 1.11759e-07, -5.06639e-07, 1, 1.81689, 1.51604, -0.425049)
+script = ExtResource("24_dhlwf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BananaRoot/Banana3/Area3D"]
+transform = Transform3D(0.229364, 0.871219, 0.434014, -0.957257, 0.282632, -0.0614605, -0.176212, -0.401366, 0.898807, 1.55042, 0.249496, -1.52905)
+shape = SubResource("CapsuleShape3D_s0gvp")
+
+[node name="Banana4" type="MeshInstance3D" parent="BananaRoot"]
+transform = Transform3D(0.0110183, -0.0111012, 0.0484272, 0.0344195, -0.15126, -0.0110551, 0.0268122, 0.198739, -0.00570903, 133.213, 2.9898, 36.3956)
+mesh = ExtResource("21_s0gvp")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_dhlwf")
+
+[node name="Area3D" type="Area3D" parent="BananaRoot/Banana4" groups=["fruit"]]
+transform = Transform3D(1, -4.76837e-07, -7.45058e-09, -7.45058e-09, 1, 2.40281e-07, 1.11759e-07, -5.06639e-07, 1, 1.81689, 1.51604, -0.425049)
+script = ExtResource("24_dhlwf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BananaRoot/Banana4/Area3D"]
+transform = Transform3D(0.229364, 0.871219, 0.434014, -0.957257, 0.282632, -0.0614605, -0.176212, -0.401366, 0.898807, 1.55042, 0.249496, -1.52905)
 shape = SubResource("CapsuleShape3D_s0gvp")

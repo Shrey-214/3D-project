@@ -11,7 +11,7 @@ func _ready() -> void:
 	add_to_group("fruit")
 	monitoring = true
 	monitorable = true
-	print("[Fruit] READY: ", name)
+	print("[FruitArea] READY: ", name)
 
 func pick_up_to_controller(controller: XRController3D) -> bool:
 	if held:
