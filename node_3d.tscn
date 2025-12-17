@@ -544,6 +544,7 @@ mesh = SubResource("CylinderMesh_jsnrv")
 
 [node name="Light" type="SpotLight3D" parent="player/XROrigin3D/RightController/Flashlight"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.18)
+light_energy = 10.0
 shadow_enabled = true
 
 [node name="StickVisual" type="MeshInstance3D" parent="player/XROrigin3D/RightController"]
@@ -609,7 +610,7 @@ transform = Transform3D(0.0516388, -0.998666, 0, 0.998666, 0.0516388, 0, 0, 0, 1
 height = 111.099
 
 [node name="CSGCylinder3D3" type="CSGCylinder3D" parent="."]
-transform = Transform3D(0.0516388, -0.998666, 0, 0.998666, 0.0516388, 0, 0, 0, 1, 133.775, 1.80087, 185.617)
+transform = Transform3D(0.0516388, -0.998666, 0, 0.998666, 0.0516388, 0, 0, 0, 1, 133.775, 1.80087, 157.109)
 height = 111.099
 
 [node name="CSGCylinder3D2" type="CSGCylinder3D" parent="."]
@@ -622,9 +623,10 @@ target_position = Vector3(121.049, 1.992, -18.705)
 
 [node name="TeleportPad_1_to_dark" parent="." groups=["animals_to_equip"] instance=ExtResource("18_i0g27")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 126.715, 1.25081, 70.5124)
+target_position = Vector3(126.7, 1.251, 79.71)
 
 [node name="TeleportPad" parent="." groups=["equip_to_level2"] instance=ExtResource("18_i0g27")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 134.744, 0.4, 183.253)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 134.744, 0.4, 154.689)
 
 [node name="Ore" parent="." instance=ExtResource("20_lggff")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 130.922, 0.5, -98.05)
