@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=3 uid="uid://hit6ddguobp4"]
+[gd_scene load_steps=73 format=3 uid="uid://hit6ddguobp4"]
 
 [ext_resource type="Script" uid="uid://ci4kln15ugy4u" path="res://starter.gd" id="1_4arys"]
 [ext_resource type="Script" uid="uid://ojals4h4iyqn" path="res://addons/zylann.hterrain/hterrain.gd" id="1_a0tk4"]
@@ -196,6 +196,9 @@ albedo_color = Color(0.607843, 0.14902, 0.329412, 1)
 albedo_color = Color(0.115802, 0.303495, 0.230142, 1)
 
 [sub_resource type="Skin" id="Skin_wlxy5"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_2yde8"]
+viewport_path = NodePath("player/XROrigin3D/XRCamera3D/HUDViewport")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_tuemg"]
 radius = 0.15
@@ -573,6 +576,40 @@ right_controller_path = NodePath("RightController")
 [node name="XRCamera3D" type="XRCamera3D" parent="player/XROrigin3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.978804, 0)
 
+[node name="HUDSprite" type="Sprite3D" parent="player/XROrigin3D/XRCamera3D"]
+transform = Transform3D(0.184581, 0, 0.168611, 0, 0.25, 0, -0.168611, 0, 0.184581, -11, 4, -30)
+texture = SubResource("ViewportTexture_2yde8")
+
+[node name="HUDViewport" type="SubViewport" parent="player/XROrigin3D/XRCamera3D"]
+transparent_bg = true
+size = Vector2i(1024, 512)
+render_target_update_mode = 4
+
+[node name="UIRoot" type="Control" parent="player/XROrigin3D/XRCamera3D/HUDViewport"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TopLeftLabel" type="Label" parent="player/XROrigin3D/XRCamera3D/HUDViewport/UIRoot"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -36.5
+offset_top = -11.5
+offset_right = 36.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 250
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="LeftController" type="XRController3D" parent="player/XROrigin3D"]
 tracker = &"left_hand"
 
@@ -650,7 +687,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_2yde8")
 script = ExtResource("17_vxd74")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Animals/Bear/FeedArea"]
-transform = Transform3D(1, 0, 7.45058e-08, 0, 1, 9.31323e-10, -8.9407e-08, 9.31323e-10, 1, 19.8052, 0.651855, 95.8389)
+transform = Transform3D(0.970145, -0.0995177, -0.0160122, 0.0541825, 1.79363, 0.263674, 0.00129372, -0.492002, 0.964478, -10.1828, -35.522, 102.303)
 shape = SubResource("SphereShape3D_s0gvp")
 
 [node name="Deer" type="MeshInstance3D" parent="Animals"]
@@ -663,7 +700,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_id0nj")
 script = ExtResource("17_vxd74")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Animals/Deer/FeedArea"]
-transform = Transform3D(1.766, 0, 0, 0, 5.93562, 0, 0, 0, 1, 18.7188, 592.147, -57.2529)
+transform = Transform3D(1.5162, 4.5577, 0, -1.3737, 5.0305, 0, 0, 0, 1, 18.7188, 592.147, -57.2529)
 shape = SubResource("SphereShape3D_vxd74")
 
 [node name="Giraffe" type="MeshInstance3D" parent="Animals"]
@@ -676,7 +713,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_1q667")
 script = ExtResource("17_vxd74")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Animals/Giraffe/FeedArea"]
-transform = Transform3D(1.81842, 0, 5.96046e-08, 0, 6.44949, 0, 0, 0, 1.40971, 0, 1.95826, 0)
+transform = Transform3D(1.01576, 2.07457, 0.974559, 0.364361, 8.20268, -0.437646, -1.64281, 3.10199, 0.505508, 0, 1.95826, 0)
 shape = SubResource("SphereShape3D_dhlwf")
 
 [node name="Elephant" type="MeshInstance3D" parent="Animals"]
@@ -689,32 +726,20 @@ surface_material_override/0 = SubResource("StandardMaterial3D_ype4i")
 script = ExtResource("17_vxd74")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Animals/Elephant/FeedArea"]
-transform = Transform3D(6.12705, 1.49012e-08, 2.98023e-08, 4.47035e-08, 6.00279, -9.31323e-10, -3.72529e-08, -2.32831e-10, 14.0443, 4.07658, -91.4609, 130.987)
+transform = Transform3D(6.07755, 0.0534563, 0.0912938, -0.0238946, 8.04056, -4.72659, -0.0483011, 2.74852, 13.8254, 5.22588, -143.841, 130.987)
 shape = SubResource("SphereShape3D_5t8nk")
 debug_color = Color(0.274941, 0.565847, 0.763334, 0.42)
 
-[node name="CSGCylinder3D" type="CSGCylinder3D" parent="."]
-transform = Transform3D(0.0516388, -0.998666, 0, 0.998666, 0.0516388, 0, 0, 0, 1, 115.898, 1.80087, -23.7556)
-height = 111.099
-
-[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="."]
-transform = Transform3D(0.0516388, -0.998666, 0, 0.998666, 0.0516388, 0, 0, 0, 1, 133.694, 1.80087, 157.181)
-height = 111.099
-
-[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="."]
-transform = Transform3D(0.0516388, -0.998666, 0, 0.998666, 0.0516388, 0, 0, 0, 1, 128.348, 1.80087, 72.3581)
-height = 111.099
-
 [node name="TeleportPad_0_to_1" parent="." groups=["ore_to_animals"] instance=ExtResource("18_i0g27")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 119.557, 1.08363, -24.6911)
+transform = Transform3D(2.29526, 0, 0, 0, 2.23577, 0, 0, 0, 1, 119.557, 2.25547, -24.6911)
 target_position = Vector3(121.049, 1.992, -18.705)
 
 [node name="TeleportPad_1_to_dark" parent="." groups=["animals_to_equip"] instance=ExtResource("18_i0g27")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 126.715, 1.25081, 70.5124)
+transform = Transform3D(2.10121, 0, 0, 0, 1.72939, 0, 0, 0, 1, 126.715, 1.71116, 70.5124)
 target_position = Vector3(126.7, 1.251, 79.71)
 
 [node name="TeleportPad" parent="." groups=["equip_to_level2"] instance=ExtResource("18_i0g27")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 134.744, 0.4, 154.689)
+transform = Transform3D(1.65874, 0, 0, 0, 1.34076, 0, 0, 0, 1, 134.744, 1.34731, 154.689)
 target_position = Vector3(134, 0.4, 160)
 
 [node name="Ore" parent="." instance=ExtResource("20_lggff")]
@@ -735,7 +760,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 106.828, 0.5, -103.495)
 [node name="BananaRoot" type="Node3D" parent="."]
 
 [node name="Banana" type="MeshInstance3D" parent="BananaRoot"]
-transform = Transform3D(0.0110183, -0.0111012, 0.0484272, 0.0344195, -0.15126, -0.0110551, 0.0268122, 0.198739, -0.00570903, 134.444, 2.9898, 64.16)
+transform = Transform3D(0.0223853, -0.00320625, 0.082577, 0.0699284, -0.0436869, -0.0188509, 0.054473, 0.0573998, -0.00973491, 134.031, 2.64332, 65.287)
 mesh = ExtResource("21_s0gvp")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_dhlwf")
@@ -745,11 +770,11 @@ transform = Transform3D(1, -4.76837e-07, -7.45058e-09, -7.45058e-09, 1, 2.40281e
 script = ExtResource("24_dhlwf")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="BananaRoot/Banana/Area3D"]
-transform = Transform3D(0.229364, 0.871219, 0.434014, -0.957257, 0.282632, -0.0614605, -0.176212, -0.401366, 0.898807, 1.55042, 0.249496, -1.52905)
+transform = Transform3D(-0.0713034, 0.49666, -0.0493965, -0.823378, -0.0377637, -0.722229, -0.971032, -0.00444889, 0.616034, 2.13611, 0.114868, 0.955688)
 shape = SubResource("CapsuleShape3D_s0gvp")
 
 [node name="Banana2" type="MeshInstance3D" parent="BananaRoot"]
-transform = Transform3D(-0.0195264, -0.0575609, -0.0435518, 0.0404834, -0.0145968, -0.0216365, 0.00219493, -0.242845, 0.0116235, 100.41, 5.32361, -6.98012)
+transform = Transform3D(-0.031581, -0.0231782, -0.114253, 0.0654758, -0.00587773, -0.0567606, 0.00354997, -0.097787, 0.0304928, 98.5978, 5.5945, -7.63475)
 mesh = ExtResource("21_s0gvp")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_dhlwf")
@@ -763,7 +788,7 @@ transform = Transform3D(0.229364, 0.871219, 0.434014, -0.957257, 0.282632, -0.06
 shape = SubResource("CapsuleShape3D_s0gvp")
 
 [node name="Banana3" type="MeshInstance3D" parent="BananaRoot"]
-transform = Transform3D(0.0110183, -0.0111012, 0.0484272, 0.0344195, -0.15126, -0.0110551, 0.0268122, 0.198739, -0.00570903, 136.167, 3.07546, 10.9019)
+transform = Transform3D(0.0280891, -0.00551413, 0.143787, 0.087746, -0.075133, -0.0328242, 0.0683526, 0.0987165, -0.0169509, 136.487, 2.00994, 10.9019)
 mesh = ExtResource("21_s0gvp")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_dhlwf")
@@ -777,7 +802,7 @@ transform = Transform3D(0.229364, 0.871219, 0.434014, -0.957257, 0.282632, -0.06
 shape = SubResource("CapsuleShape3D_s0gvp")
 
 [node name="Banana4" type="MeshInstance3D" parent="BananaRoot"]
-transform = Transform3D(0.0110183, -0.0111012, 0.0484272, 0.0344195, -0.15126, -0.0110551, 0.0268122, 0.198739, -0.00570903, 133.213, 2.9898, 36.3956)
+transform = Transform3D(0.0273978, -0.00418461, 0.144969, 0.0855866, -0.0570177, -0.0330939, 0.0666705, 0.074915, -0.0170902, 133.213, 2.28938, 36.3956)
 mesh = ExtResource("21_s0gvp")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_dhlwf")
@@ -787,7 +812,7 @@ transform = Transform3D(1, -4.76837e-07, -7.45058e-09, -7.45058e-09, 1, 2.40281e
 script = ExtResource("24_dhlwf")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="BananaRoot/Banana4/Area3D"]
-transform = Transform3D(0.229364, 0.871219, 0.434014, -0.957257, 0.282632, -0.0614605, -0.176212, -0.401366, 0.898807, 1.55042, 0.249496, -1.52905)
+transform = Transform3D(0.28018, 0.472295, 0.398619, -1.16934, 0.153217, -0.0564482, -0.215252, -0.217584, 0.825507, 1.55042, 0.249496, -1.52911)
 shape = SubResource("CapsuleShape3D_s0gvp")
 
 [node name="CrystalWandRoot" type="Node3D" parent="."]
@@ -842,7 +867,8 @@ surface_material_override/0 = SubResource("StandardMaterial3D_qpkl4")
 
 [node name="Area3D" type="Area3D" parent="CrystalWandRoot/Wand" groups=["equip"]]
 script = ExtResource("27_obt1j")
+hold_scale = 0.1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CrystalWandRoot/Wand/Area3D"]
-transform = Transform3D(-0.0207156, 0.999785, 0, -0.999784, -0.0207156, 0, 0, 0, 1, 0.979034, 0.949216, 0.495453)
+transform = Transform3D(-0.0207156, 0.999785, 0, -0.999784, -0.0207156, 0, 0, 0, 1, 0.979034, -0.0716969, 1.45367)
 shape = SubResource("CylinderShape3D_nu31w")

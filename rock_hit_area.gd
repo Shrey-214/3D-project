@@ -15,15 +15,12 @@ func _ready() -> void:
 func _on_area_entered(area: Area3D) -> void:
 	if not _can_hit:
 		return
-
-	# Only count left-hand collisions
 	if area == null:
 		return
 	if not area.is_in_group("hand"):
 		return
 
-	# IMPORTANT: make sure it is left hand, not right
-	# Your node is named LeftHandArea, so we can check by name
+	# only left hand counts
 	if area.name != "LeftHandArea":
 		return
 
@@ -34,11 +31,17 @@ func _register_hit() -> void:
 	_hits += 1
 	print("[Rock] HIT ", _hits, "/", hits_to_break)
 
+	# ✅ Update HUD + play stone hit sound via player.gd
+	var player := get_tree().get_first_node_in_group("player")
+	if player and player.has_method("set_rock_hits"):
+		player.call("set_rock_hits", _hits)
+
+	# break if reached
 	if _hits >= hits_to_break:
 		_break_rock()
 		return
 
-	# cooldown so one contact doesn't count as many hits
+	# cooldown so one contact doesn't count multiple hits
 	get_tree().create_timer(hit_cooldown).timeout.connect(func():
 		_can_hit = true
 	)
@@ -53,7 +56,7 @@ func _break_rock() -> void:
 	else:
 		queue_free()
 
-	# tell player game is complete
+	# ✅ tell player game is complete (victory sound + HUD)
 	var player := get_tree().get_first_node_in_group("player")
 	if player and player.has_method("on_rock_destroyed"):
 		player.call("on_rock_destroyed")

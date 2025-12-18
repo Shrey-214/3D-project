@@ -5,7 +5,8 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wc3wj"]
 albedo_color = Color(1, 1, 0.192157, 1)
 emission_enabled = true
-emission_energy_multiplier = 5.0
+emission = Color(0.878431, 0.945098, 0, 1)
+emission_energy_multiplier = 7.07
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_52qyt"]
 shading_mode = 0
