@@ -3,7 +3,7 @@ extends Area3D
 var fed: bool = false
 
 func _ready() -> void:
-	# IMPORTANT: controller script checks group "animal"
+	# controller script checks group "animal"
 	add_to_group("animal")
 
 	monitoring = true
@@ -18,13 +18,12 @@ func _on_area_entered(area: Area3D) -> void:
 	if fed:
 		return
 
-	# only accept fruit areas
+	# only acceptting fruit areas
 	if area == null or not area.is_in_group("fruit"):
 		return
 
 	print("[FeedArea] Fruit touched:", area.name, " -> FEED!")
 
-	# Fruit Area3D is child of BananaRoot, so delete the ROOT so mesh + collision disappear
 	var fruit_root := area.get_parent()
 	if fruit_root and fruit_root is Node:
 		print("[FeedArea] Removing fruit root:", fruit_root.name)

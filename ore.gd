@@ -17,16 +17,13 @@ func _ready() -> void:
 		" layer=", collision_layer,
 		" mask=", collision_mask)
 
-	# ✨ listen to both areas and bodies
+	
 	area_entered.connect(_on_area_entered)
 	body_entered.connect(_on_body_entered)
 
 	set_process(true)
 
 
-# -------------------------------------------------
-# HAND touches ore → attach to that controller
-# -------------------------------------------------
 func _on_area_entered(area: Area3D) -> void:
 	print("[Ore] area_entered from: ", area.name, " groups=", area.get_groups())
 
@@ -41,10 +38,7 @@ func _on_area_entered(area: Area3D) -> void:
 			print("[Ore] Hand Area parent is not an XRController3D")
 
 
-# -------------------------------------------------
-# (Optional) PLAYER BODY hits ore → attach to right hand
-# You can remove this whole function if you *only* want hands.
-# -------------------------------------------------
+
 func _on_body_entered(body: Node3D) -> void:
 	print("[Ore] body_entered from: ", body.name, " groups=", body.get_groups())
 
@@ -59,30 +53,25 @@ func _on_body_entered(body: Node3D) -> void:
 			print("[Ore] Could not find RightController under player!")
 
 
-# -------------------------------------------------
-# Attach ore under a controller node
-# -------------------------------------------------
+
 func _attach_to_controller(controller: XRController3D) -> void:
 	holder = controller
 	held = true
 	print("[Ore] Attached to controller: ", controller.name)
 
-	# Re-parent so it follows the hand
+	
 	var old_parent := get_parent()
 	if old_parent:
 		old_parent.remove_child(self)
 	controller.add_child(self)
 
-	# Put the ore a bit in front of the controller in local space
+	
 	transform = Transform3D.IDENTITY.translated(Vector3(0, 0, -0.15))
 
-	# Stop further physics triggers while held
+	
 	monitoring = false
 
 
-# -------------------------------------------------
-# While held → watch trigger, collect on press
-# -------------------------------------------------
 func _process(delta: float) -> void:
 	if not held or holder == null or collected:
 		return
@@ -104,9 +93,7 @@ func _process(delta: float) -> void:
 	_prev_trigger_down = trigger_down
 
 
-# -------------------------------------------------
-# Collect & notify player
-# -------------------------------------------------
+
 func _collect() -> void:
 	if collected:
 		return

@@ -27,12 +27,12 @@ func pick_up_to_controller(controller: XRController3D) -> bool:
 	_original_parent = get_parent()
 	_original_global = global_transform
 
-	# Reparent under controller so it follows hand
+	
 	if _original_parent:
 		_original_parent.remove_child(self)
 	controller.add_child(self)
 
-	# Put fruit a bit in front of controller
+	
 	transform = Transform3D.IDENTITY.translated(hold_offset)
 
 	monitoring = false
@@ -48,7 +48,7 @@ func drop_from_controller() -> void:
 
 	var world_xform := global_transform
 
-	# move back to original parent
+	
 	if holder:
 		holder.remove_child(self)
 	if _original_parent:

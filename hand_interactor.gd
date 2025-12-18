@@ -18,13 +18,13 @@ func _process(delta: float) -> void:
 	if _hovered_ore == null:
 		return
 
-	# Get trigger value from the parent XRController3D
+	
 	var controller := get_parent() as XRController3D
 	if controller == null:
 		return
 
-	var trigger_value := controller.get_float(&"trigger")  # 0.0 .. 1.0
+	var trigger_value := controller.get_float(&"trigger")  
 	if trigger_value > 0.8:
 		if is_instance_valid(_hovered_ore) and _hovered_ore.has_method("collect"):
 			_hovered_ore.collect()
-			_hovered_ore = null   # so we don't double-collect
+			_hovered_ore = null   

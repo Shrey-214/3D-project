@@ -2,7 +2,7 @@ extends Area3D
 
 @export var value: int = 1
 
-# ✅ Hand placement controls (edit per object in Inspector)
+
 @export var hold_offset: Vector3 = Vector3(0.0, -0.05, -0.18)
 @export var hold_rotation_deg: Vector3 = Vector3(0.0, 90.0, 0.0)
 @export var hold_scale: float = 0.15
@@ -32,24 +32,22 @@ func _attach_to_controller(controller: XRController3D) -> void:
 	holder = controller
 	held = true
 
-	# ✅ ROOT is the MeshInstance3D (parent of this Area3D)
+
 	var root := get_parent() as Node3D
 	if root == null:
 		print("[Equip] ERROR: Area has no Node3D parent root")
 		return
 
-	# ✅ Reparent ROOT to controller so mesh + collision move together
 	var old_parent := root.get_parent()
 	if old_parent:
 		old_parent.remove_child(root)
 	controller.add_child(root)
 
-	# ✅ Apply hand pose: offset + rotation + scale
 	root.position = hold_offset
 	root.rotation_degrees = hold_rotation_deg
 	root.scale = Vector3.ONE * hold_scale
 
-	# Keep collisions disabled while held (optional)
+
 	monitoring = false
 	monitorable = false
 

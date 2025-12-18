@@ -12,7 +12,7 @@ var total_animals: int = 0
 var equipment_count: int = 0
 const EQUIP_TARGET := 4
 
-# NEW: rock hit counter (Level 2 / Rock level)
+# rock hit counter (Level 2 / Rock level)
 var rock_hits: int = 0
 const ROCK_HIT_TARGET := 3
 
@@ -26,7 +26,7 @@ const ROCK_HIT_TARGET := 3
 @onready var flashlight: Node3D = $XROrigin3D/RightController/Flashlight
 @onready var rapid_tp = $RapidTeleport
 
-# NEW: HUD label path (your tree)
+# HUD label path 
 @onready var hud_label: Label = $XROrigin3D/XRCamera3D/HUDViewport/UIRoot/TopLeftLabel
 
 const MOVE_SPEED := 5.0
@@ -211,7 +211,6 @@ func add_equipment(amount: int = 1) -> void:
 	if equipment_count >= EQUIP_TARGET:
 		_activate_teleport_group("equip_to_level2")
 
-# NEW: call this from rock script each time rock is hit
 func set_rock_hits(hits: int) -> void:
 	rock_hits = hits
 	_update_hud()
@@ -221,7 +220,7 @@ func on_rock_destroyed() -> void:
 		return
 
 	phase = GamePhase.COMPLETE
-	print("GAME OVER: Rock destroyed ✅")
+	print("GAME OVER: Rock destroyed")
 
 	_enable_stick(false)
 	_enable_rapid_teleport(false)
@@ -276,7 +275,7 @@ func _update_hud() -> void:
 		
 
 		GamePhase.COMPLETE:
-			line1 = "GAME OVER "
+			line1 = "GAME OVER"
 			
 
 	hud_label.text = "%s\n%s\n%s" % [title, line1, line2]

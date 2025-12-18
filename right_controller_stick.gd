@@ -5,7 +5,7 @@ extends XRController3D
 @export var debug_print_hits: bool = true
 @export var pickup_cooldown_time: float = 0.35
 
-# drop settings (simple ground snap)
+# drop settings 
 @export var drop_forward: float = 0.6
 @export var drop_up: float = 0.2
 @export var drop_down_ray: float = 5.0
@@ -151,12 +151,11 @@ func _drop_fruit_to_ground() -> void:
 
 	var world_root := get_tree().current_scene
 
-	# compute a drop point in front of controller
 	var forward := -global_transform.basis.z
 	var start := global_transform.origin + forward * drop_forward + Vector3.UP * drop_up
 	var down_end := start + Vector3.DOWN * drop_down_ray
 
-	# move fruit back to scene first (keep global)
+	# move fruit back to scene first 
 	held_fruit_root.reparent(world_root, true)
 
 	# ray down to ground

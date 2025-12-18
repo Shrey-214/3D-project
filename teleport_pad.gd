@@ -5,7 +5,6 @@ var active: bool = false
 
 func _ready() -> void:
 	area_entered.connect(_on_area_entered)
-	# make sure visuals match initial "active" value
 	_update_visual()
 
 func set_active(v: bool) -> void:
@@ -15,7 +14,7 @@ func set_active(v: bool) -> void:
 func _update_visual() -> void:
 	var mesh := get_node_or_null("MeshInstance3D")
 	if mesh:
-		mesh.visible = active  # only show when active
+		mesh.visible = active  
 
 func _on_area_entered(area: Area3D) -> void:
 	if not active:
@@ -29,7 +28,7 @@ func _on_area_entered(area: Area3D) -> void:
 		t.origin = target_position
 		player.global_transform = t
 
-		# Call proper phase start depending on pad group
+
 		if is_in_group("ore_to_animals"):
 			player._start_level1_animals()
 		elif is_in_group("animals_to_equip"):
