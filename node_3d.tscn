@@ -1,4 +1,4 @@
-[gd_scene load_steps=122 format=3 uid="uid://hit6ddguobp4"]
+[gd_scene load_steps=123 format=3 uid="uid://hit6ddguobp4"]
 
 [ext_resource type="Script" uid="uid://ci4kln15ugy4u" path="res://starter.gd" id="1_4arys"]
 [ext_resource type="Script" uid="uid://ojals4h4iyqn" path="res://addons/zylann.hterrain/hterrain.gd" id="1_a0tk4"]
@@ -72,6 +72,7 @@
 [ext_resource type="ArrayMesh" uid="uid://ga8opxbfdjxg" path="res://addons/kaykit_halloween_bits/Assets/obj/gravestone.obj" id="70_jvcxi"]
 [ext_resource type="ArrayMesh" uid="uid://cwanuo153hcuv" path="res://addons/kaykit_halloween_bits/Assets/obj/post_skull.obj" id="71_8uyoo"]
 [ext_resource type="ArrayMesh" uid="uid://cehyxg00y4eey" path="res://addons/kaykit_halloween_bits/Assets/obj/skull_candle.obj" id="72_jvcxi"]
+[ext_resource type="AudioStream" uid="uid://3du4glcm6ehx" path="res://Audio/JungleEffect.mp3" id="73_8uyoo"]
 
 [sub_resource type="Resource" id="Resource_i5arm"]
 script = ExtResource("3_jka67")
@@ -797,15 +798,15 @@ debug_color = Color(0.274941, 0.565847, 0.763334, 0.42)
 
 [node name="TeleportPad_0_to_1" parent="." groups=["ore_to_animals"] instance=ExtResource("18_i0g27")]
 transform = Transform3D(2.29526, 0, 0, 0, 2.23577, 0, 0, 0, 1, 119.557, 2.25547, -24.6911)
-target_position = Vector3(121.049, 1.992, -18.705)
+target_position = Vector3(121.049, 1, -18.705)
 
 [node name="TeleportPad_1_to_dark" parent="." groups=["animals_to_equip"] instance=ExtResource("18_i0g27")]
 transform = Transform3D(2.10121, 0, 0, 0, 1.72939, 0, 0, 0, 1, 126.715, 1.71116, 70.5124)
-target_position = Vector3(126.7, 1.251, 79.71)
+target_position = Vector3(126.7, 1, 79.71)
 
 [node name="TeleportPad" parent="." groups=["equip_to_level2"] instance=ExtResource("18_i0g27")]
 transform = Transform3D(1.65874, 0, 0, 0, 1.34076, 0, 0, 0, 1, 134.744, 1.34731, 154.689)
-target_position = Vector3(134, 0.4, 160)
+target_position = Vector3(134, 1, 160)
 
 [node name="Ore" parent="." instance=ExtResource("20_lggff")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 130.922, 0.5, -98.05)
@@ -2542,3 +2543,9 @@ mesh = ExtResource("30_1q667")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_g4s1x")
 surface_material_override/1 = SubResource("StandardMaterial3D_pf4ct")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("73_8uyoo")
+volume_db = -20.66
+autoplay = true
+parameters/looping = true

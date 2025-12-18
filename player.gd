@@ -38,7 +38,7 @@ var _turn_cooldown: float = 0.0
 
 func _ready() -> void:
 	_start_level0()
-	_activate_teleport_group("equip_to_level2")
+	#_activate_teleport_group("equip_to_level2")
 	_update_hud()
 
 func _physics_process(delta: float) -> void:
